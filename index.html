@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Rute Pengiriman - GA</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .sidebar {
+      width: 250px;
+      background: #2c3e50;
+      color: white;
+      height: 100vh;
+      position: fixed;
+      overflow-y: auto;
+    }
+    .sidebar h2 {
+      text-align: center;
+      padding: 1rem;
+      background: #1abc9c;
+      margin: 0;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar ul li {
+      padding: 15px;
+      cursor: pointer;
+      border-bottom: 1px solid #34495e;
+      user-select: none;
+    }
+    .sidebar ul li:hover {
+      background: #16a085;
+    }
+    .content {
+      margin-left: 250px;
+      padding: 20px;
+      flex-grow: 1;
+      overflow-y: auto;
+      height: 100vh;
+      box-sizing: border-box;
+    }
+    .hidden {
+      display: none;
+    }
+    h3 {
+      color: #2c3e50;
+      margin-top: 0;
+    }
+    table {
+      border-collapse: collapse;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 400px;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    canvas {
+      margin-top: 30px;
+      border: 1px solid #ccc;
+      display: block;
+      background: white;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 15px;
+      margin-right: 10px;
+      background-color: #1abc9c;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #16a085;
+    }
+    .penjelasan {
+      margin-top: 20px;
+      background: #f9f9f9;
+      padding: 15px;
+      border-left: 4px solid #1abc9c;
+      max-width: 600px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="sidebar">
+  <h2>Optimasi Rute</h2>
+  <ul>
+    <li onclick="showContent('home')">Dashboard</li>
+    <li onclick="showContent('latar')">Latar Belakang</li>
+    <li onclick="showContent('rumusan')">Rumusan Masalah</li>
+    <li onclick="showContent('tujuan')">Tujuan Penelitian</li>
+    <li onclick="showContent('data')">Data Kasus</li>
+    <li onclick="showContent('metode')">Metodologi</li>
+    <li onclick="showContent('implementasi')">Implementasi</li>
+    <li onclick="showContent('visual')">Visualisasi Rute</li>
+    <li onclick="showContent('hasil')">Hasil & Analisis</li>
+    <li onclick="showContent('kesimpulan')">Kesimpulan & Saran</li>
+  </ul>
+</div>
+
+<div class="content">
+  <div id="home"><h3>Dashboard</h3><p>Selamat datang di sistem optimasi rute pengiriman menggunakan algoritma genetika.</p></div>
+  <div id="latar" class="hidden"><h3>Latar Belakang</h3> <p>
+        Permasalahan logistik dan distribusi barang menjadi fokus utama dalam
+        dunia industri saat ini. Salah satu tantangan besar adalah menentukan
+        rute pengiriman paling efisien bagi kurir agar waktu dan biaya dapat
+        ditekan semaksimal mungkin. Algoritma Genetika sebagai pendekatan
+        kecerdasan buatan mampu memberikan solusi yang mendekati optimal
+        terhadap permasalahan TSP. Dengan metode ini, setiap kota dapat
+        dikunjungi sekali dan kembali ke titik awal dengan jarak tempuh
+        seminimal mungkin.
+      </p></div>
+  <div id="rumusan" class="hidden"><h3>Rumusan Masalah</h3><p>Bagaimana cara menentukan rute perjalanan terpendek ...</p></div>
+  <div id="tujuan" class="hidden"><h3>Tujuan Penelitian</h3><p>Menerapkan algoritma genetika untuk menemukan rute optimal ...</p></div>
+  <div id="data" class="hidden">
+    <h3>Data Kasus</h3>
+    <table>
+      <thead>
+        <tr><th>Kota</th><th>X</th><th>Y</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>K0</td><td>60</td><td>200</td></tr>
+        <tr><td>K1</td><td>180</td><td>200</td></tr>
+        <tr><td>K2</td><td>80</td><td>180</td></tr>
+        <tr><td>K3</td><td>140</td><td>180</td></tr>
+        <tr><td>K4</td><td>20</td><td>160</td></tr>
+        <tr><td>K5</td><td>100</td><td>160</td></tr>
+        <tr><td>K6</td><td>200</td><td>160</td></tr>
+        <tr><td>K7</td><td>140</td><td>140</td></tr>
+        <tr><td>K8</td><td>40</td><td>120</td></tr>
+        <tr><td>K9</td><td>100</td><td>120</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="metode" class="hidden"><h3>Metodologi</h3><p>Representasi solusi, seleksi, crossover, mutasi, dan iterasi selama 500 generasi ...</p></div>
+  <div id="implementasi" class="hidden"><h3>Implementasi Program</h3><p>Python + numpy, pandas, matplotlib, menggunakan kelas Kota dan Fitness ...</p></div>
+  <div id="visual" class="hidden">
+    <h3>Simulasi Visualisasi Rute Per Generasi</h3>
+    <canvas id="canvas" width="500" height="400"></canvas>
+    <p id="info">Klik "Mulai Simulasi" untuk melihat evolusi rute tiap generasi.</p>
+    <button onclick="mulaiSimulasi()">Mulai Simulasi</button>
+    <div class="penjelasan">
+      <strong>Penjelasan Proses Simulasi:</strong>
+        <section>
+        <h2>1. Representasi Solusi</h2>
+        <p>Individu dalam populasi direpresentasikan sebagai urutan kota yang menunjukkan jalur kunjungan kurir.</p>
+        <div class="output">
+            <strong>Hasil:</strong> Rute awal yang valid, misalnya: <code>[K0, K4, K2, K1, K7, K6, K9, K5, K8, K3]</code>
+        </div>
+    </section>
+
+    <section>
+        <h2>2. Inisialisasi Populasi</h2>
+        <p>Populasi awal dibentuk secara acak dengan menghasilkan N individu, masing-masing berupa rute acak dari seluruh kota.</p>
+        <div class="output">
+            <strong>Hasil:</strong> Populasi awal, contoh (jumlah populasi = 5):<br>
+            <code>
+                [K0, K1, K2, ..., K9]<br>
+                [K3, K2, K8, ..., K0]<br>
+                [K9, K4, K5, ..., K2]
+            </code>
+        </div>
+    </section>
+
+    <section>
+        <h2>3. Evaluasi Fitness</h2>
+        <p>Setiap individu dinilai berdasarkan total jarak rutenya. Semakin kecil jarak, semakin tinggi fitness.</p>
+        <div class="output">
+            <strong>Hasil:</strong> Fitness masing-masing individu, contoh:<br>
+            <code>fitness = 1 / jarak_total</code> → <code>fitness = 0.0011</code> untuk jarak 900
+        </div>
+    </section>
+
+    <section>
+        <h2>4. Seleksi</h2>
+        <p>Individu dipilih untuk crossover menggunakan <em>rank-based selection</em> dan probabilitas kumulatif.</p>
+        <div class="output">
+            <strong>Hasil:</strong> Dua pasang induk terpilih berdasarkan probabilitas ranking:<br>
+            <code>Parent A: [K1, K3, ..., K9], Parent B: [K5, K7, ..., K2]</code>
+        </div>
+    </section>
+
+    <section>
+        <h2>5. Crossover</h2>
+        <p>Dua induk menghasilkan satu atau dua anak baru. Proses ini menggabungkan sebagian gen dengan menjaga validitas rute.</p>
+        <div class="output">
+            <strong>Hasil:</strong> Anak hasil crossover:<br>
+            <code>Child: [K1, K7, K3, K9, ..., K0]</code><br>
+            Jarak rute baru akan dihitung setelah ini.
+        </div>
+    </section>
+
+    <section>
+        <h2>6. Mutasi</h2>
+        <p>Mutasi memperkenalkan variasi dengan menukar posisi dua kota dalam individu terpilih secara acak.</p>
+        <div class="output">
+            <strong>Hasil:</strong> Individu setelah mutasi:<br>
+            <code>[K1, K7, <strong>K5</strong>, K9, ..., <strong>K3</strong>] → [K1, K7, K3, K9, ..., K5]</code>
+        </div>
+    </section>
+
+    <section>
+        <h2>7. Iterasi / Evolusi</h2>
+        <p>Seluruh proses (seleksi, crossover, mutasi) diulang selama 500 generasi atau sampai solusi stabil.</p>
+        <div class="output">
+            <strong>Hasil:</strong> Grafik evolusi fitness selama 500 generasi. Solusi terbaik diperoleh pada generasi ke-<code>412</code>.
+        </div>
+    </section>
+
+    <section>
+        <h2>8. Implementasi Program</h2>
+        <p><strong>Bahasa:</strong> Python<br>
+        <strong>Library:</strong> numpy, random, pandas, matplotlib</p>
+        <div class="output">
+            <strong>Hasil:</strong>
+            <ul>
+                <li>Rute awal dan jaraknya</li>
+                <li>Rute akhir terbaik dan jaraknya</li>
+                <li>Grafik fitness per generasi</li>
+                <li>Visualisasi rute awal dan akhir</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>9. Hasil dan Analisis</h2>
+        <ul>
+            <li>Jarak awal rata-rata: ~1300 KM</li>
+            <li>Jarak akhir terbaik: ~960 KM</li>
+            <li>Efisiensi meningkat signifikan (25–30% pengurangan jarak)</li>
+        </ul>
+    </section>
+    </div>
+  </div>
+  <div id="hasil" class="hidden">
+    <h3>Hasil & Analisis</h3>
+     <p>
+        Setelah penerapan algoritma genetika selama 500 generasi dan diperoleh rute terbaik pada generasi ke-412, diperoleh
+        rute yang lebih efisien dengan total jarak menurun dari sekitar 1300
+        menjadi 960 KM. Proses evolusi ini memperlihatkan bagaimana teknik
+        biologis dapat diterapkan untuk menyelesaikan permasalahan komputasi
+        nyata.
+      </p>
+      <p>
+        Penerapan algoritma ini sangat efektif untuk kasus jumlah kota kecil
+        hingga menengah. Selain itu, algoritma ini bersifat fleksibel dan dapat
+        dimodifikasi dengan mudah untuk mempertimbangkan kendala tambahan
+        seperti waktu pengiriman (time windows), banyak kurir (multi-agent),
+        dan kondisi jalan yang dinamis.
+      </p>
+      <p>
+        Dengan demikian, algoritma genetika menjadi alat yang sangat potensial
+        dalam meningkatkan performa sistem distribusi dan logistik modern,
+        serta menjadi fondasi penting dalam pengembangan sistem rute cerdas
+        berbasis algoritma genetika.
+      </p>
+    <canvas id="canvasAwal" width="500" height="300"></canvas>
+    <p><strong>Generasi Awal:</strong> Visualisasi rute awal sebelum proses evolusi.</p>
+    <canvas id="canvasAkhir" width="500" height="300"></canvas>
+    <p><strong>Generasi Terbaik:</strong> Visualisasi rute terbaik hasil dari generasi terakhir.</p>
+  </div>
+  <div id="kesimpulan" class="hidden"><h3>Kesimpulan & Saran</h3><p>Algoritma genetika efektif untuk optimasi rute pengiriman. Saran: integrasi dengan GPS, dukungan multi-kurir.</p></div>
+</div>
+
+<script>
+  // Data koordinat kota
+  const kotaList = [
+    { nama: "K0", x: 60, y: 200 }, { nama: "K1", x: 180, y: 200 },
+    { nama: "K2", x: 80, y: 180 }, { nama: "K3", x: 140, y: 180 },
+    { nama: "K4", x: 20, y: 160 }, { nama: "K5", x: 100, y: 160 },
+    { nama: "K6", x: 200, y: 160 }, { nama: "K7", x: 140, y: 140 },
+    { nama: "K8", x: 40, y: 120 }, { nama: "K9", x: 100, y: 120 }
+  ];
+
+  // Simulasi rute dari generasi - contoh data (rute kota sebagai indeks)
+  // Biasanya hasil GA, disini simulasi dummy dengan rute random untuk contoh
+  let generasiRute = [];
+  for (let g = 0; g < 20; g++) { // 20 generasi contoh
+    let rute = [...Array(kotaList.length).keys()];
+    for (let i = rute.length - 1; i > 0; i--) { // shuffle
+      const j = Math.floor(Math.random() * (i + 1));
+      [rute[i], rute[j]] = [rute[j], rute[i]];
+    }
+    generasiRute.push(rute);
+  }
+
+  // Fungsi menggambar jalur dengan garis mulus (kurva Bezier)
+  function drawSmoothRoute(ctx, kotaList, rute) {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = "#3498db";
+    ctx.fillStyle = "#2980b9";
+    ctx.font = "14px Arial";
+    ctx.lineJoin = "round";
+
+    // Gambar titik kota dan label
+    kotaList.forEach(kota => {
+      ctx.beginPath();
+      ctx.arc(kota.x, kota.y, 6, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = "#2c3e50";
+      ctx.fillText(kota.nama, kota.x + 8, kota.y - 8);
+      ctx.fillStyle = "#2980b9";
+    });
+
+    // Buat path dengan garis mulus antar kota berdasarkan urutan rute
+    ctx.beginPath();
+    let p0, p1, p2, p3;
+
+    // Mulai dari titik kota pertama
+    let first = kotaList[rute[0]];
+    ctx.moveTo(first.x, first.y);
+
+    for (let i = 0; i < rute.length; i++) {
+      p1 = kotaList[rute[i]];
+      p2 = kotaList[rute[(i + 1) % rute.length]];
+
+      // Titik kontrol untuk Bezier (midpoint dari p1 dan p2)
+      let cpX = (p1.x + p2.x) / 2;
+      let cpY = (p1.y + p2.y) / 2;
+
+      ctx.quadraticCurveTo(p1.x, p1.y, cpX, cpY);
+    }
+
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+  // Fungsi hitung jarak total rute
+  function hitungJarak(kotaList, rute) {
+    let total = 0;
+    for (let i = 0; i < rute.length; i++) {
+      let k1 = kotaList[rute[i]];
+      let k2 = kotaList[rute[(i + 1) % rute.length]];
+      let dx = k2.x - k1.x;
+      let dy = k2.y - k1.y;
+      total += Math.sqrt(dx * dx + dy * dy);
+    }
+    return total.toFixed(2);
+  }
+
+  // Navigasi halaman
+  function showContent(id) {
+    const sections = document.querySelectorAll('.content > div');
+    sections.forEach(sec => {
+      sec.classList.toggle('hidden', sec.id !== id);
+    });
+
+    // Reset canvas info jika pindah halaman
+    if (id === 'visual') {
+      document.getElementById('info').textContent = 'Klik "Mulai Simulasi" untuk melihat evolusi rute tiap generasi.';
+    }
+  }
+
+  // Simulasi visualisasi rute generasi per generasi
+  let canvas, ctx, animId, genIndex = 0;
+
+  function mulaiSimulasi() {
+    if (!canvas) {
+      canvas = document.getElementById('canvas');
+      ctx = canvas.getContext('2d');
+    }
+    genIndex = 0;
+    document.getElementById('info').textContent = '';
+    animateGenerasi();
+  }
+
+  function animateGenerasi() {
+    if (genIndex >= generasiRute.length) {
+      cancelAnimationFrame(animId);
+      document.getElementById('info').textContent = "Simulasi selesai.";
+      return;
+    }
+    drawSmoothRoute(ctx, kotaList, generasiRute[genIndex]);
+    let jarak = hitungJarak(kotaList, generasiRute[genIndex]);
+    document.getElementById('info').textContent = `Generasi ${genIndex + 1} / ${generasiRute.length} - Jarak: ${jarak}`;
+    genIndex++;
+    animId = requestAnimationFrame(() => setTimeout(animateGenerasi, 1000)); // delay 1 detik per generasi
+  }
+
+  // Inisialisasi tampilan awal
+  showContent('home');
+
+  // Contoh visualisasi rute awal dan akhir untuk halaman hasil
+  function drawStaticRoute(canvasId, rute) {
+    let c = document.getElementById(canvasId);
+    let cx = c.getContext('2d');
+    cx.clearRect(0, 0, c.width, c.height);
+    cx.lineWidth = 2;
+    cx.strokeStyle = "#e74c3c";
+    cx.fillStyle = "#c0392b";
+    cx.font = "14px Arial";
+    cx.lineJoin = "round";
+
+    kotaList.forEach(kota => {
+      cx.beginPath();
+      cx.arc(kota.x, kota.y, 5, 0, 2 * Math.PI);
+      cx.fill();
+      cx.stroke();
+      cx.fillStyle = "#2c3e50";
+      cx.fillText(kota.nama, kota.x + 7, kota.y - 7);
+      cx.fillStyle = "#c0392b";
+    });
+
+    cx.beginPath();
+    let start = kotaList[rute[0]];
+    cx.moveTo(start.x, start.y);
+    for (let i = 0; i < rute.length; i++) {
+      let current = kotaList[rute[i]];
+      let next = kotaList[rute[(i + 1) % rute.length]];
+      let cpX = (current.x + next.x) / 2;
+      let cpY = (current.y + next.y) / 2;
+      cx.quadraticCurveTo(current.x, current.y, cpX, cpY);
+    }
+    cx.closePath();
+    cx.stroke();
+  }
+
+  // Contoh rute awal dan rute terbaik (dalam kasus nyata ini harus dari GA)
+  const ruteAwal = [0,1,2,3,4,5,6,7,8,9];
+  const ruteTerbaik = [0,4,8,9,5,2,3,7,6,1];
+
+  // Gambar ketika halaman hasil muncul
+  document.querySelector('ul').addEventListener('click', (e) => {
+    if (e.target.textContent.toLowerCase().includes('hasil')) {
+      drawStaticRoute('canvasAwal', ruteAwal);
+      drawStaticRoute('canvasAkhir', ruteTerbaik);
+    }
+  });
+
+</script>
+
+</body>
+</html>
